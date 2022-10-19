@@ -15,7 +15,7 @@ class model(Model):
     try:
       cursor.execute("SELECT count(*) FROM tasks")
     except sqlite3.OperationalError:
-      cursor.execute("CREATE TABLE tasks("tasks text, date date, description text)")
+      cursor.execute("CREATE TABLE tasks("tasks text, date date, due_date date, description text)")
     cursor.close()
 
  def select(self: "model") -> tuple:
@@ -29,7 +29,7 @@ class model(Model):
   return cursor.fetchall()
 
 # return true
-def insert(self: "model", task: str, date: date, description: str) -> bool:
+def insert(self: "model", task: "str", date: "date", due_date: "date", description: "str") -> bool:
   """
   Inserts a new entry into the database
   :param task: Task name
@@ -37,11 +37,10 @@ def insert(self: "model", task: str, date: date, description: str) -> bool:
   :param description: Description of task
   :return: None
   """
-  params = {'task': task, 'date': date.today(), 'description': description}
+  params = {"task": task, "date": date, "due_date": due_date, "description": description}
   connection = sqlite3.connect(DB_FILE)
   cursor = connection.cursor()
-  cursor.execute("INSERT INTO tasks VALUES(:task, :date, :description)", params)
-
+  cursor.execute("INSERT INTO tasks VALUES(:task, :date, :due_date, :description)", params)
   connection.commit()
   cursor.close()
   return True

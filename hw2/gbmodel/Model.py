@@ -6,11 +6,12 @@ class Model():
         """
         pass
 
-    def insert(self: "model", task: str, date: date, description: str) -> None:
+    def insert(self: "model", task: "str", date: "date", due_date: "date", description: "str") -> bool:
         """
         Inserts a new entry into the database
         :param task: Task name
-        :param date: Date of task
+        :param date: Date of task creation
+        :param due_date: Date of task due
         :param description: Description of task
         :return: None
         """
