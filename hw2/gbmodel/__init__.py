@@ -2,7 +2,7 @@
 model_backend = 'sqlite3'
 
 if model_backend == 'sqlite3':
-  from .model_sqlite3 import model
+  from .model_sqlite import model
 elif model_backend == 'pylist':
   from .model_pylist import model
 else:
