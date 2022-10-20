@@ -1,11 +1,14 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h2>To do list</h2>
+    <h1>To do list</h1>
 
-    <h3>Create a task <a href="{{ url_for('todo') }}">here</a></h3>
-    <h3>Tasks</h3>
+    <h2>Create a task <a href="{{ url_for('todo') }}">here</a></h2>
+    <h3>List of Tasks: </h3>
     {% for task in tasks %}
-        <p>{{ task }}</p>
+        <p class="taskInfo"><strong>{{ loop.index }})</strong> Task: {{ task.task }}</p>
+        <p class="taskInfo">Description: {{ task.description }}</p>
+        <p class="taskInfo">Due Date: {{ task.due_date }}</p>
+        <p class="taskInfo">Date created: {{ task.date}} </p>
     {% endfor %}
 
 {% endblock %}
