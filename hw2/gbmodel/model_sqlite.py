@@ -44,3 +44,16 @@ class model(Model):
     cursor.close()
     return True
   
+  def delete(self: "model", task: "str") -> bool:
+    """
+    Deletes an entry from the database
+    :param task: Task name
+    :return: None
+    """
+    params = {"task": task}
+    connection = sqlite3.connect(DB_FILE)
+    cursor = connection.cursor()
+    cursor.execute("DELETE FROM tasks WHERE tasks = :task", params)
+    connection.commit()
+    cursor.close()
+    return True

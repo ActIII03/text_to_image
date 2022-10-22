@@ -5,7 +5,13 @@
     <h3>Create a task <a href="{{ url_for('todo') }}">here</a></h3>
     <h3>Tasks</h3>
     {% for task in tasks %}
-        <p>{{ task }}</p>
+        <!-- display tasks w/ check box -->
+        <form action="{{ url_for('todo') }}" method="delete">
+            <input type="checkbox" name="task" value="{{ task.id }}" />
+            <label for="task">{{ task.task }}</label>
+            <input type="submit" value="Delete" />
+        </form>
+
     {% endfor %}
 
 {% endblock %}

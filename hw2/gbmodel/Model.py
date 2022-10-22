@@ -16,3 +16,10 @@ class Model():
         :return: None
         """
         pass
+    def delete(self: "model", task: "str") -> bool:
+        """
+        Deletes an entry from the database
+        :param task: Task name
+        :return: None
+        """
+        pass
