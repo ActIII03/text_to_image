@@ -7,7 +7,7 @@ app = flask.Flask(__name__)
 
 app.add_url_rule('/', 
                   view_func=Index.as_view('index'),
-                  methods=['GET'])
+                  methods=['GET', 'DELETE'])
 
 app.add_url_rule('/todo',
                   view_func=ToDo.as_view('todo'),

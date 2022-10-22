@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h2>To do list</h2>
+    <h1>To do list</h1>
 
-    <h3>Create a task <a href="{{ url_for('todo') }}">here</a></h3>
-    <h3>Tasks</h3>
+    <h2>Create a task <a href="{{ url_for('todo') }}">here</a></h2>
+    <h3>List of Tasks: </h3>
     {% for task in tasks %}
-        <!-- display tasks w/ check box -->
+        <!-- display tasks w/ check box for deletion -->
         <form action="{{ url_for('todo') }}" method="delete">
-            <input type="checkbox" name="task" value="{{ task.id }}" />
+            <input type="checkbox" name="task" value="{{ task.task }}" />
             <label for="task">{{ task.task }}</label>
             <input type="submit" value="Delete" />
         </form>
