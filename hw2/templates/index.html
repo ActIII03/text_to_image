@@ -6,9 +6,12 @@
     <h3>List of Tasks: </h3>
     {% for task in tasks %}
         <!-- display tasks w/ check box for deletion -->
-        <form action="{{ url_for('todo') }}" method="delete">
+        <form action="{{ url_for('index') }}" method="delete">
             <input type="checkbox" name="task" value="{{ task.task }}" />
-            <label for="task">{{ task.task }}</label>
+            <label for="task">{{ task.task }} 
+                <br>"Due Date": {{ task.due_date }}
+                <br>"Description": {{ task.description }}
+            </label>
             <input type="submit" value="Delete" />
         </form>
 
