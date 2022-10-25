@@ -1,0 +1,20 @@
+# Use Ubuntu 20.04 LTS as the base image
+FROM ubuntu:20.04
+
+# Workdir
+WORKDIR /app
+
+# Copy files from the host to the container
+COPY . .
+
+# Setup python3 and pip3
+RUN apt-get update && apt-get install -y python3 python3-pip
+
+# Install the requirements
+RUN pip3 install -r requirements.txt
+
+# Expose container port 5000 to host port localhost:8000
+EXPOSE 5000 
+
+# Run the app
+CMD ["python3", "app.py"]
