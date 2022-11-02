@@ -1,1 +1,4 @@
 env
+tasks.db
+__pycache__
+gbmodel/__pycache__
