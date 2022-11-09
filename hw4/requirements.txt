@@ -2,5 +2,6 @@ wheel
 flask
 google-cloud-datastore
 google-cloud-firestore
+google-cloud
 gunicorn
 rsa

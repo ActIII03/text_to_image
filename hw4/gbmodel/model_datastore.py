@@ -29,7 +29,7 @@ class model(Model):
     entities = list(map(from_datastore, query.fetch()))
     return entities
   
-  def insert(self, task: "str", date: "date", due_date: "date", description: "str"):
+  def insert(self, task, date, due_date, description):
     """
     Inserts a new entry into the database
     :param task: Task name
