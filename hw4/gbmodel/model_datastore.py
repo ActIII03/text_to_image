@@ -2,7 +2,7 @@ from .Model import Model
 from datetime import datetime
 from google.cloud import datastore
 
-def from_datastore(entity: "list") -> "list":
+def from_datastore(entity):
   """
   Transforms a Datastore entity into a format suitable for the
   application
@@ -18,8 +18,9 @@ def from_datastore(entity: "list") -> "list":
 
 class model(Model):
   def __init__(self):
-    self.client = datastore.Client('cloud-touche-atouche')
-  def select(self) -> "list":
+    self.client = datastore.Client('hw4-todo-368106')
+
+  def select(self):
     """
     Gets all entries from the database
     :return: list containing all rows of database
@@ -28,7 +29,7 @@ class model(Model):
     entities = list(map(from_datastore, query.fetch()))
     return entities
   
-  def insert(self, task: "str", date: "date", due_date: "date", description: "str") -> bool:
+  def insert(self, task: "str", date: "date", due_date: "date", description: "str"):
     """
     Inserts a new entry into the database
     :param task: Task name

@@ -1,5 +1,6 @@
 from flask import redirect, url_for, request, render_template
 from flask.views import MethodView
+from datetime import datetime
 import gbmodel
 
 class ToDo(MethodView):
@@ -16,7 +17,7 @@ class ToDo(MethodView):
         :return: Redirects to the todo page
         """
         model = gbmodel.get_model()
-        model.insert(request.form['task'], request.form['due_date'], request.form['description'])
+        model.insert(request.form['task'], datetime.now(), request.form['due_date'], request.form['description'])
         return redirect(url_for('index'))
 
     def delete(self: "ToDo") -> "flask.Response":
