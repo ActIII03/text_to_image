@@ -1,12 +1,12 @@
 class Model():
-    def select(self: "model") -> tuple:
+    def select(self):
         """
         Gets all entries from the database
         :return: Tuple containing all rows of database
         """
         pass
 
-    def insert(self: "model", task: "str", date: "date", due_date: "date", description: "str") -> bool:
+    def insert(self, task, date, due_date, description):
         """
         Inserts a new entry into the database
         :param task: Task name
@@ -16,7 +16,7 @@ class Model():
         :return: None
         """
         pass
-    def delete(self: "model", task: "str") -> bool:
+    def delete(self, task):
         """
         Deletes an entry from the database
         :param task: Task name

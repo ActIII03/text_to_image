@@ -39,12 +39,12 @@ class model(Model):
     :return: None
     """
     key = self.client.key('Task')
-    task = datastore.Entity(key)
-    task.update({
+    aTask = datastore.Entity(key)
+    aTask.update({
       'task': task,
       'date': date,
       'due_date': due_date,
       'description': description
     })
-    self.client.put(task)
+    self.client.put(aTask)
     return True

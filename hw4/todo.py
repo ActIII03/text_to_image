@@ -4,14 +4,14 @@ from datetime import datetime
 import gbmodel
 
 class ToDo(MethodView):
-    def get(self: "ToDo") -> "flask.Response":
+    def get(self):
         """
         Displays the todo page
         :return: The todo page
         """
         return render_template('todo.html')
 
-    def post(self: "ToDo") -> "flask.Response":
+    def post(self):
         """
         Adds a new task to the database
         :return: Redirects to the todo page
@@ -20,7 +20,7 @@ class ToDo(MethodView):
         model.insert(request.form['task'], datetime.now(), request.form['due_date'], request.form['description'])
         return redirect(url_for('index'))
 
-    def delete(self: "ToDo") -> "flask.Response":
+    def delete(self):
         """
         Deletes a task from the database
         :return: Redirects to the todo page
