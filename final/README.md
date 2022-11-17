@@ -17,11 +17,10 @@
 - [ ] Install glcloud cli on local machine
   - [ ] documentation (linux): https://cloud.google.com/sdk/docs/quickstart-linux
 - [ ] Chose API:
-  - [ ] Math Symbol Solver
-  - [ ] Measure Converter
+  - [ ] Google Language API
 - [ ] Pick the following:
   - [ ] CSS Framework
   - [ ] DB --> Cloud Datastore
   - [ ] Deployment
     - [ ] GCP Compute Engine (Lab 5.2g.12)
-  - [ ] **OPTIONAL** GCS (Lab 5.1g)
+  - [ ] **OPTIONAL** GCS (Lab 5.1g or 8.2g)
