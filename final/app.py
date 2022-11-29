@@ -1,3 +1,6 @@
+"""
+Simple Text to image generator application using Flask (MVC pattern) where the users' queries are converted to images and stored in Google Datastore.
+"""
 from datetime import datetime
 from config import *
 import logging
@@ -9,14 +12,14 @@ from flask import Flask, redirect, render_template, request
 from google.cloud import datastore
 from google.cloud import storage
 
-
-CLOUD_STORAGE_BUCKET = os.environ.get("CLOUD_STORAGE_BUCKET")
-
-
 app = Flask(__name__)
 
 @app.route("/")
 def homepage():
+  """
+  Homepage of the application
+  returns: rendered homepage.html
+  """ 
   # create datastore client
   # datastore_client = datastore.Client()
 
@@ -28,8 +31,12 @@ def homepage():
 
   return render_template("homepage.html", ai_images=ai_images)
 
-@app.route("/gen_from_text", methods=["GET", "POST"])
+@app.route("/gen_from_text", methods=["POST"])
 def gen_from_text():
+  """ 
+  Generate image from text POST request
+  returns: redirect to homepage
+  """
   # get the text from the form
   text = request.form.get("text")
 
@@ -42,26 +49,29 @@ def gen_from_text():
     'x-rapidapi-host': "dezgo.p.rapidapi.com"
   }
 
-  response = requests.request("POST", url, data=payload, headers=headers)
+  # response = requests.request("POST", url, data=payload, headers=headers)
 
   # Return png payload from response to "/"
   return redirect("/")
 
 
-
+# Error handlers
 @app.errorhandler(500)
 def server_error(e):
-    logging.exception("An error occurred during a request.")
-    return (
-        """
-    An internal error occurred: <pre>{}</pre>
-    See logs for full stacktrace.
-    """.format(
-            e
-        ),
-        500,
+  """
+  Return a custom 500 error.
+  """ 
+ logging.exception("An error occurred during a request.")
+ return (
+     """
+ An internal error occurred: <pre>{}</pre>
+ See logs for full stacktrace.
+ """.format(
+         e
+     ),
+     500,
     )
 
-# TODO: Switch to MVP and then add in the rest of the features 
+# Main function 
 if __name__ == "__main__":
   app.run(host="0.0.0.0", port=8080, debug=True)
