@@ -62,5 +62,6 @@ def server_error(e):
         500,
     )
 
+# TODO: Switch to MVP and then add in the rest of the features 
 if __name__ == "__main__":
   app.run(host="0.0.0.0", port=8080, debug=True)
