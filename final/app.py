@@ -12,6 +12,10 @@ from flask import Flask, redirect, render_template, request
 from google.cloud import datastore
 from google.cloud import storage
 
+# dev imports
+from PIL import Image
+import io
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -42,35 +46,25 @@ def gen_from_text():
 
   url = "https://dezgo.p.rapidapi.com/text2image"
 
-  payload = "steps=50&height=512&sampler=k_lms&width=512&guidance=7.5&prompt=an%20astronaut%20riding%20a%20horse%2C%20digital%20art%2C%20highly-detailed%20masterpiece%20trending%20HQ"
+  payload = "steps=65&height=512&sampler=k_lms&width=512&guidance=7.5&prompt=armant%20touche%20coding%20on%20a%20computer%20in%20Portland%20in%20the%20style%20of%20highly-detailed%20art%20HQ"
   headers = {
     'content-type': 'application/x-www-form-urlencoded',
     'x-rapidapi-key': DEZGO_API_KEYS,
     'x-rapidapi-host': "dezgo.p.rapidapi.com"
   }
 
-  # response = requests.request("POST", url, data=payload, headers=headers)
+  response = requests.request("POST", url, data=payload, headers=headers)
+
+  in_memory_file = io.BytesIO(response.content)
+  img = Image.open(in_memory_file)
+  img.show()
+
+  with open("armant1.png", "wb") as f:
+    f.write(response.content)
+    
 
   # Return png payload from response to "/"
   return redirect("/")
-
-
-# Error handlers
-@app.errorhandler(500)
-def server_error(e):
-  """
-  Return a custom 500 error.
-  """ 
- logging.exception("An error occurred during a request.")
- return (
-     """
- An internal error occurred: <pre>{}</pre>
- See logs for full stacktrace.
- """.format(
-         e
-     ),
-     500,
-    )
 
 # Main function 
 if __name__ == "__main__":
