@@ -13,7 +13,6 @@ from google.cloud import datastore
 from google.cloud import storage
 
 # dev imports
-from PIL import Image
 import io
 
 app = Flask(__name__)
@@ -35,33 +34,61 @@ def homepage():
 
   return render_template("homepage.html", ai_images=ai_images)
 
-@app.route("/gen_from_text", methods=["POST"])
-def gen_from_text():
-  """ 
-  Generate image from text POST request
-  returns: redirect to homepage
+def post_text():
+  """
+  Parses text from request form ("text")
+  returns response
   """
   # get the text from the form
   text = request.form.get("text")
 
   url = "https://dezgo.p.rapidapi.com/text2image"
 
-  payload = "steps=65&height=512&sampler=k_lms&width=512&guidance=7.5&prompt=armant%20touche%20coding%20on%20a%20computer%20in%20Portland%20in%20the%20style%20of%20highly-detailed%20art%20HQ"
+  payload = "steps=65&height=512&sampler=k_lms&width=512&guidance=7.5&prompt=schrodinger%20cat%20laying%20in%20laundry%20masterpiece%20trending%20HQ"
   headers = {
     'content-type': 'application/x-www-form-urlencoded',
     'x-rapidapi-key': DEZGO_API_KEYS,
     'x-rapidapi-host': "dezgo.p.rapidapi.com"
   }
 
-  response = requests.request("POST", url, data=payload, headers=headers)
+  # return requests.request("POST", url, data=payload, headers=headers)
 
-  in_memory_file = io.BytesIO(response.content)
-  img = Image.open(in_memory_file)
-  img.show()
+def post_image(img):
+  """
+  Uploads image to Google Cloud Storage
+  args: img
+  returns: response[imgUrl, imgName, textPrompt]
+  """
 
-  with open("armant1.png", "wb") as f:
-    f.write(response.content)
+  # create storage client
+  storage_client = storage.Client()
+
+  # get bucket
+  bucket = storage_client.get_bucket(GCS_BUCKET)
+
+
+
+
+
+
+
+@app.route("/gen_from_text", methods=["POST"])
+def gen_from_text():
+  """ 
+  Generate image from text POST request
+  returns: redirect to homepage
+  """
+  response = post_text()
+
+  # dev code block DELETE Later
+
+  # open png file from test_img/ 
+  with open("test_img/test.png", "rb") as image_file:
+    encoded_string = base64.b64encode(image_file.read())
+  # END of dev block
     
+  # call put_image() to store image in Google Datastore passing in png file
+  put_image(encoded_string)
 
   # Return png payload from response to "/"
   return redirect("/")
