@@ -1,92 +1,17 @@
-"""
-Simple Text to image generator application using Flask (MVC pattern) where the users' queries are converted to images and stored in Google Datastore.
-"""
-from datetime import datetime
-from config import *
-import logging
-import os
-import requests
+import flask, os
+from flask.views import MethodView
+from index import Index
+from gen_img import GenImg
 
-from flask import Flask, redirect, render_template, request
+app = flask.Flask(__name__)
 
-from google.cloud import datastore
-from google.cloud import storage
+app.add_url_rule('/',
+                 view_func=Index.as_view('index'),
+                 methods=["GET"])
 
-# dev imports
-import io
+app.add_url_rule('/gen_from_text',
+                  view_func=GenImg.as_view('gen_from_text'),
+                  methods=["POST"])
 
-app = Flask(__name__)
-
-@app.route("/")
-def homepage():
-  """
-  Homepage of the application
-  returns: rendered homepage.html
-  """ 
-  # create datastore client
-  # datastore_client = datastore.Client()
-
-  # query for all entities for imageAI
-  # query = datastore_client.query(kind="imageAI")
-  # ai_images = list(query.fetch())
-
-  ai_images = []
-
-  return render_template("homepage.html", ai_images=ai_images)
-
-def post_text():
-  """
-  Parses text from request form ("text")
-  returns response
-  """
-  # get the text from the form
-  text = request.form.get("text")
-
-  url = "https://dezgo.p.rapidapi.com/text2image"
-
-  payload = "steps=65&height=512&sampler=k_lms&width=512&guidance=7.5&prompt=techbro%20working%20at%20FAANG%20Meme%20digital%20art%2C%20highly-detailed%20masterpiece%20trending%20HQ"
-  headers = {
-    'content-type': 'application/x-www-form-urlencoded',
-    'x-rapidapi-key': DEZGO_API_KEYS,
-    'x-rapidapi-host': "dezgo.p.rapidapi.com"
-  }
-
-  return requests.request("POST", url, data=payload, headers=headers)
-
-def post_image(img):
-  """
-  Uploads image to Google Cloud Storage
-  args: img
-  returns: response[imgUrl, imgName, textPrompt]
-  """
-
-  # create storage client
-  storage_client = storage.Client()
-
-  # get bucket
-  bucket = storage_client.get_bucket(GCS_BUCKET)
-
-
-@app.route("/gen_from_text", methods=["POST"])
-def gen_from_text():
-  """ 
-  Generate image from text POST request
-  returns: redirect to homepage
-  """
-  response = post_text()
-
-  # dev code block DELETE Later
-
-  with open("test9.png", "wb") as f:
-    f.write(response.content)
-  # END of dev block
-    
-  # call put_image() to store image in Google Datastore passing in png file
-  # put_image(encoded_string)
-
-  # Return png payload from response to "/"
-  return redirect("/")
-
-# Main function 
-if __name__ == "__main__":
-  app.run(host="0.0.0.0", port=8080, debug=True)
+if __name__ == '__main__':
+  app.run(host='0.0.0.0',port=int(os.environ.get('PORT',8080)))
