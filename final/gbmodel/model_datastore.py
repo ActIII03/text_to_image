@@ -46,15 +46,14 @@ class model(Model):
     """
     key = self.client.key('Text2Image')
     text_image = datastore.Entity(key)
-
+    # Upload image to Cloud Storage and get public URL for Text2Image entity
     blob = self.image_bucket.blob(datetime.now().isoformat() + '.png')
     myImage = BytesIO(img)
     blob.upload_from_file(myImage, content_type='image/png')
     blob.make_public()
-    imgURL = blob.public_url
 
     text_image.update({
-      'img': imgURL,
+      'img': blob.public_url,
       'text_prompt': text_prompt,
       'date': datetime.now()
     })
