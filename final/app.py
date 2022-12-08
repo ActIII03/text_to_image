@@ -10,8 +10,8 @@ app.add_url_rule('/',
                  methods=["GET"])
 
 app.add_url_rule('/gen_from_text',
-                  view_func=GenImg.as_view('gen_from_text'),
+                  view_func=GenImg.as_view('post'),
                   methods=["POST"])
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0',port=int(os.environ.get('PORT',8080)))
+  app.run(host='0.0.0.0',port=int(os.environ.get('PORT',8080)), debug=True)
