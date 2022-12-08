@@ -1,0 +1,25 @@
+
+<!doctype html>
+<html>
+<h1>Text-to-Image API test</h1>
+<p> Purpose of web application is generate an image when given text input.</p>
+  <!-- Text box for user to paste text for gen_from_text in python flask routine -->
+  <!-- form takes: (i) number of steps (ii) height (iii) width (iv) text prompt -->
+  <form action="/gen_from_text" method="post">
+    <label for="text">Text Prompt:</label>
+    <input type="text" id="text_prompt" name="text_prompt"><br><br>
+    <input type="submit" value="Submit">
+  </form>
+
+  <!-- Display img in ai_images -->
+  {% for image in ai_images %}
+    <br>
+    <p>Image{{ loop.index }}: </p>
+    <img src="{{ image[0] }}" alt="ai_image" width="540" height="450">
+    <p>Text Prompt: {{ image[1] }} </p>
+    <!-- Download image at URL -->
+    <a href="{{ image[0] }}" download>Download Image</a>
+  {% endfor %}
+
+
+</html>

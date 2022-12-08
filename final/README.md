@@ -14,14 +14,18 @@
 - [x] Add a README.md file
 - [x] Add a requirements.txt file
 - [x] Add a .gitignore file
-- [ ] Install glcloud cli on local machine
+- [X] Install glcloud cli on local machine
   - [ ] documentation (linux): https://cloud.google.com/sdk/docs/quickstart-linux
-- [ ] Chose API:
-  - [ ] Math Symbol Solver
-  - [ ] Measure Converter
+- [X] Chose API:
+  - [ ] Dvego API
 - [ ] Pick the following:
   - [ ] CSS Framework
-  - [ ] DB --> Cloud Datastore
+  - [X] DB --> Cloud Datastore
   - [ ] Deployment
     - [ ] GCP Compute Engine (Lab 5.2g.12)
-  - [ ] **OPTIONAL** GCS (Lab 5.1g)
+  - [ ] **OPTIONAL** GCS (Lab 5.1g or 8.2g)
+
+- [ ] Implement/Validate:
+  - [ ] insert into db
+  - [ ] select from db
+  - [ ] display image in index.html
