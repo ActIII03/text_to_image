@@ -13,10 +13,12 @@
 
   <!-- Display img in ai_images -->
   {% for image in ai_images %}
-    <!-- display url of image.img -->
-    <img src="{{ image.img }}" alt="image">
-    <p>Text prompt: {{ image.text_prompt }}</p>
-    {{ image }}
+    <br>
+    <p>Image{{ loop.index }}: </p>
+    <img src="{{ image[0] }}" alt="ai_image" width="540" height="450">
+    <p>Text Prompt: {{ image[1] }} </p>
+    <!-- Download image at URL -->
+    <a href="{{ image[0] }}" download>Download Image</a>
   {% endfor %}
 
 
