@@ -1,18 +1,23 @@
 
 <!doctype html>
 <html>
-  <!-- Text box for user to paste text for gen_from_text in python flask routine -->
-  <!-- <form action="/gen_from_text" method="POST" enctype="multipart/form-data"> -->
-  <!--   <input type="text" name="text" placeholder="Enter text here"> -->
-  <!--   <input type="submit" value="Submit">
-  <!-- </form> -->
 <h1>Text-to-Image API test</h1>
-
 <p> Purpose of web application is generate an image when given text input.</p>
-
-  <!-- Push submit to call gen_from_text in python flask routine -->
-  <form action="/gen_from_text" method="POST" enctype="multipart/form-data">
+  <!-- Text box for user to paste text for gen_from_text in python flask routine -->
+  <!-- form takes: (i) number of steps (ii) height (iii) width (iv) text prompt -->
+  <form action="/gen_from_text" method="post">
+    <label for="text">Text Prompt:</label>
+    <input type="text" id="text_prompt" name="text_prompt"><br><br>
     <input type="submit" value="Submit">
   </form>
+
+  <!-- Display img in ai_images -->
+  {% for image in ai_images %}
+    <!-- display url of image.img -->
+    <img src="{{ image.img }}" alt="image">
+    <p>Text prompt: {{ image.text_prompt }}</p>
+    {{ image }}
+  {% endfor %}
+
 
 </html>
