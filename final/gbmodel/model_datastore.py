@@ -17,7 +17,7 @@ def from_datastore(entity):
     This returns:
         [ img, text_prompt, date ]
 
-    where img is a image files,
+    where img is an image url,
     text_prompt is a string, and date is a datetime object.
     """
     if not entity:
