@@ -1,5 +1,8 @@
 from flask import redirect, request, url_for, render_template
 from flask.views import MethodView
+import os
+import requests
+
 import gbmodel
 
 class GenImg(MethodView):
@@ -14,21 +17,28 @@ class GenImg(MethodView):
     model.insert(response.content, request.form['text_prompt'])
     return redirect(url_for('index'))
 
-  def post_text():
+  def post_text(self):
     """
     Parses text from request form ("text")
     returns response
     """
 
-    text = request.form.get("text")
+    text_prompt = request.form.get("text_prompt")
+    #replace spaces with %20
+    text_prompt = text_prompt.replace(" ", "%20")
+    # replace commas with %2C
+    text_prompt = text_prompt.replace(",", "%2C")
+    # replace periods with %2E
+    text_prompt = text_prompt.replace(".", "%2E")
+
 
     url = "https://dezgo.p.rapidapi.com/text2image"
 
-    payload = "steps=65&height=512&sampler=k_lms&width=512&guidance=7.5&prompt=techbro%20working%20at%20FAANG%20Meme%20digital%20art%2C%20highly-detailed%20masterpiece%20trending%20HQ"
+    payload = "steps=65&height=512&sampler=k_lms&width=512&guidance=7.5&prompt=" + text_prompt + "%20HQ"
 
     headers = {
       'content-type': 'application/x-www-form-urlencoded',
-      'x-rapidapi-key': DEZGO_API_KEYS,
+      'x-rapidapi-key': os.environ.get("DEZGO_API_KEYS"),
       'x-rapidapi-host': "dezgo.p.rapidapi.com"
     }
 
