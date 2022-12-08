@@ -1,6 +1,11 @@
 from .Model import Model
 from datetime import datetime
+import os
+from io import BytesIO
+
 from google.cloud import datastore
+from google.cloud import storage
+
 
 def from_datastore(entity):
     """
@@ -25,6 +30,7 @@ def from_datastore(entity):
 class model(Model):
   def __init__(self):
     self.client = datastore.Client('flask-ai-py-app')
+    self.image_bucket = storage.Client().get_bucket('final-python-textimage')
 
   def select(self):
     query = self.client.query(kind= 'Text2Image')
@@ -32,10 +38,23 @@ class model(Model):
     return entities
 
   def insert(self, img, text_prompt):
+    """
+    Inserts a new Text2Image into Datastore and also uploads the image to Cloud Storage.
+    :param img: image file
+    :param text_prompt: string
+    :return: True if Text2Image created, otherwise False
+    """
     key = self.client.key('Text2Image')
     text_image = datastore.Entity(key)
+
+    blob = self.image_bucket.blob(datetime.now().isoformat() + '.png')
+    myImage = BytesIO(img)
+    blob.upload_from_file(myImage, content_type='image/png')
+    blob.make_public()
+    imgURL = blob.public_url
+
     text_image.update({
-      'img': img,
+      'img': imgURL,
       'text_prompt': text_prompt,
       'date': datetime.now()
     })
