@@ -1,4 +1,4 @@
-# Handy Math Tool python flask web app
+# Text to Image python flask web app using docker and GCP
 
 # Dependencies
 - docker engine 
@@ -10,22 +10,18 @@
   - windows docker compose: https://docs.docker.com/docker-for-windows/install/
   - mac docker compose: https://docs.docker.com/docker-for-mac/install/
 
-## TO DO LIST:
-- [x] Add a README.md file
-- [x] Add a requirements.txt file
-- [x] Add a .gitignore file
-- [X] Install glcloud cli on local machine
-  - [ ] documentation (linux): https://cloud.google.com/sdk/docs/quickstart-linux
-- [X] Chose API:
-  - [ ] Dvego API
-- [ ] Pick the following:
-  - [ ] CSS Framework
-  - [X] DB --> Cloud Datastore
-  - [ ] Deployment
-    - [ ] GCP Compute Engine (Lab 5.2g.12)
-  - [ ] **OPTIONAL** GCS (Lab 5.1g or 8.2g)
+# To get setup
+- clone the repo
+  * $ git clone git@gitlab:/atouche/cloud-atouche-touche.git
+- cd into final directory
+  * $ cd final/
+- build the docker image
+  * $ docker build -t text_to_image .
+- run the docker image w/ local_dev script
+  * $ ./local_dev.sh
+- open a browser and go to http://localhost:8080/
 
-- [ ] Implement/Validate:
-  - [ ] insert into db
-  - [ ] select from db
-  - [ ] display image in index.html
+#  Description
+- This is a simple python flask web app that takes in a string of text and returns an image render by stability api via a REST API (POST) call.
+- The web app is built using the flask framework and is deployed using docker.
+- Can see prior generated images at '/' route
