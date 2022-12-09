@@ -24,8 +24,5 @@ gcloud iam service-accounts keys create todo-app.json \
 # Move json key to ~/Downloads/
 mv todo-app.json ~/Downloads/
 
-# get project id
-gcloud config get-value project
-
 # Export GOOGLE_APPLICATION_CREDENTIALS=~/Downloads/todo-app.json
 export GOOGLE_APPLICATION_CREDENTIALS=~/Downloads/todo-app.json
