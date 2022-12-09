@@ -17,11 +17,11 @@ ROLE_NAME="textimage-pyapp"
 # gcloud projects add-iam-policy-binding $PROJECT_NAME --member serviceAccount:$ROLE_NAME@$PROJECT_NAME.iam.gserviceaccount.com --role roles/datastore.owner --role roles/storage.objectAdmin
 # 
 # # Download the key as a json file
-# gcloud iam service-accounts keys create $ROLE_NAME.json --iam-account $ROLE_NAME@$PROJECT_NAME.iam.gserviceaccount.com
+gcloud iam service-accounts keys create $ROLE_NAME.json --iam-account $ROLE_NAME@$PROJECT_NAME.iam.gserviceaccount.com
 
 # # Set the environment variable
-# export GOOGLE_APPLICATION_CREDENTIALS=$PWD/$ROLE_NAME.json
+export GOOGLE_APPLICATION_CREDENTIALS=$PWD/$ROLE_NAME.json
 # 
 
 # Add storage.buckets.get access to the role
-gcloud projects add-iam-policy-binding $PROJECT_NAME --member serviceAccount:$ROLE_NAME@$PROJECT_NAME.iam.gserviceaccount.com --role roles/storage.objectViewer
+# gcloud projects add-iam-policy-binding $PROJECT_NAME --member serviceAccount:$ROLE_NAME@$PROJECT_NAME.iam.gserviceaccount.com --role roles/storage.objectViewer
